@@ -57,61 +57,10 @@ function App(): JSX.Element | null {
     const routes = useMemo((): RouteInfo[] => [
         {
             path: '/',
-            exact: true,
-            name: 'Introduction',
-            children: (
-                <Intro />
-            )
-        },
-        {
-            path: '/device-info',
-            name: 'Device Info',
-            children: (
-                <DeviceInfo />
-            )
-        },
-        {
-            path: '/adb-over-wifi',
             name: 'ADB over WiFi',
             children: (
                 <TcpIp />
             )
-        },
-        {
-            path: '/shell',
-            name: 'Interactive Shell',
-            children: (
-                <Shell />
-            ),
-        },
-        {
-            path: '/file-manager',
-            name: 'File Manager',
-            children: (
-                <FileManagerRoute />
-            ),
-        },
-        {
-            path: '/install',
-            name: 'Install APK',
-            children: (
-                <Install />
-            ),
-        },
-        {
-            path: '/framebuffer',
-            name: 'Screen Capture',
-            children: (
-                <FrameBuffer />
-            ),
-        },
-        {
-            path: '/scrcpy',
-            name: 'Scrcpy',
-            noCache: true,
-            children: (
-                <Scrcpy />
-            ),
         },
     ], [device]);
 
@@ -119,18 +68,9 @@ function App(): JSX.Element | null {
         <LoggerContextProvider>
             <Stack verticalFill>
                 <Stack className={classNames['title-container']} horizontal verticalAlign="center">
-                    <IconButton
-                        checked={leftPanelVisible}
-                        title="Toggle Menu"
-                        iconProps={{ iconName: 'GlobalNavButton' }}
-                        onClick={toggleLeftPanel}
-                    />
-
                     <StackItem grow>
-                        <div className={classNames.title}>WebADB Demo</div>
+                        <div className={classNames.title}>kPhone Dashboard</div>
                     </StackItem>
-
-                    <ToggleLogger />
                 </Stack>
 
                 <Stack grow horizontal verticalFill disableShrink styles={{ root: { minHeight: 0, overflow: 'hidden', lineHeight: '1.5' } }}>
@@ -141,33 +81,16 @@ function App(): JSX.Element | null {
                             onDeviceChange={setDevice}
                         />
 
-                        <Nav
-                            styles={{ root: {} }}
-                            groups={[{
-                                links: routes.map(route => ({
-                                    key: route.path,
-                                    name: route.name,
-                                    url: `#${route.path}`,
-                                })),
-                            }]}
-                            selectedKey={location.pathname}
-                        />
                     </StackItem>
 
                     <StackItem grow styles={{ root: { width: 0 } }}>
                         <AdbDeviceProvider value={device}>
-                            <CacheSwitch>
-                                {routes.map<ReactElement>(route => (
-                                    <CacheRoute
-                                        exact={route.exact}
-                                        path={route.path}
-                                        noCache={route.noCache}>
-                                        {route.children}
-                                    </CacheRoute>
-                                ))}
-
-                                <Redirect to="/" />
-                            </CacheSwitch>
+                            <CacheRoute
+                                exact={undefined}
+                                path='/'
+                                noCache={true}>
+                                <TcpIp />
+                            </CacheRoute>
                         </AdbDeviceProvider>
                     </StackItem>
 

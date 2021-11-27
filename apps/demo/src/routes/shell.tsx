@@ -65,6 +65,7 @@ class AdbTerminal extends AutoDisposable {
             this.addDisposable(this.terminal.onData(data => {
                 const buffer = encodeUtf8(data);
                 value.write(buffer);
+                console.log(buffer)
             }));
 
             this.fit();

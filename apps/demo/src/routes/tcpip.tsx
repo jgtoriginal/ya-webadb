@@ -104,72 +104,16 @@ export const TcpIp = withDisplayName('TcpIp')((): JSX.Element | null => {
     return (
         <>
             <CommandBar items={commandBarItems} />
-
-            <StackItem>
-                <MessageBar>
-                    <Text>Although WebADB can enable ADB over WiFi for you, it can't connect to your device wirelessly.</Text>
-                </MessageBar>
-            </StackItem>
-            <StackItem>
-                <MessageBar >
-                    <Text>Your device will disconnect after changing ADB over WiFi config.</Text>
-                </MessageBar>
-            </StackItem>
-
             <StackItem>
                 <Toggle
                     inlineLabel
-                    label="service.adb.listen_addrs"
-                    disabled
-                    checked={!!serviceListenAddrs}
-                    onText="Enabled"
-                    offText="Disabled"
-                />
-                {serviceListenAddrs?.map((addr) => (
-                    <TextField
-                        disabled
-                        value={addr}
-                        styles={{ root: { width: 300 } }}
-                    />
-                ))}
-            </StackItem>
-
-            <StackItem>
-                <Toggle
-                    inlineLabel
-                    label="service.adb.tcp.port"
+                    label="Turn on kPhone app on my device"
                     checked={servicePortEnabled}
                     disabled={!device || !!serviceListenAddrs}
                     onText="Enabled"
                     offText="Disabled"
                     onChange={handleServicePortEnabledChange}
                 />
-                {device && (
-                    <TextField
-                        disabled={!!serviceListenAddrs}
-                        value={servicePort}
-                        styles={{ root: { width: 300 } }}
-                        onChange={handleServicePortChange}
-                    />
-                )}
-            </StackItem>
-
-            <StackItem>
-                <Toggle
-                    inlineLabel
-                    label="persist.adb.tcp.port"
-                    disabled
-                    checked={persistPortEnabled}
-                    onText="Enabled"
-                    offText="Disabled"
-                />
-                {persistPort && (
-                    <TextField
-                        disabled
-                        value={persistPort}
-                        styles={{ root: { width: 300 } }}
-                    />
-                )}
             </StackItem>
         </>
     );
